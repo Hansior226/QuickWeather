@@ -14,7 +14,7 @@ QuickWeather is a user-friendly web application that allows users to check real-
 
     Responsive design: Works on both desktop and mobile devices.
 
-#Technologies Used:
+# Technologies Used:
 
     Frontend:
 
@@ -38,7 +38,7 @@ QuickWeather is a user-friendly web application that allows users to check real-
 
         Chart.js for displaying graphical weather data
 
-#Setup Instructions:
+# Setup Instructions:
 Prerequisites:
 
     A modern web browser (Chrome, Firefox, Safari, etc.)
@@ -63,7 +63,7 @@ Configuration:
 
     Obtain an API key from OpenWeatherMap (or your chosen weather API provider) and replace it in the app’s configuration file or as an environment variable.
 
-#Additional Features (Future Enhancements):
+# Additional Features (Future Enhancements):
 
     User preferences: Allow users to save their favorite locations for quick access.
 
@@ -73,7 +73,7 @@ Configuration:
 
     Data visualization: Graphical representation of temperature, humidity, and wind speed trends.
 
-#Contributing:
+# Contributing:
 
 If you'd like to contribute to the project, feel free to fork the repository and submit a pull request. Any contributions, bug fixes, or feature enhancements are welcome!
 License:
