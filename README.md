@@ -47,10 +47,7 @@ Prerequisites:
 
 How to Run the App:
 
-    Clone the repository:
-
-git clone https://github.com/yourusername/WeatherNow.git
-cd WeatherNow
+    Clone the repository
 
 Install dependencies: If you're using React:
 
