@@ -8,14 +8,13 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [units, setUnits] = useState('metric');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchWeather = async (params = {}) => {
     let url = `http://localhost:5000/api/weather?units=${units}`;
 
-    if (coords) {
-      url += `&lat=${coords.lat}&lon=${coords.lon}`;
-    } else if (city) {
-      url += `&city=${encodeURIComponent(city)}`;
+    if (params.lat && params.lon) {
+      url += `&lat=${params.lat}&lon=${params.lon}`;
+    } else if (params.city) {
+      url += `&city=${encodeURIComponent(params.city)}`;
     } else {
       alert('Wprowadź miasto lub zezwól na lokalizację.');
       return;
@@ -31,21 +30,34 @@ export default function Home() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (coords) {
+      fetchWeather(coords);
+    } else if (city) {
+      fetchWeather({ city });
+    } else {
+      alert('Wprowadź miasto lub zezwól na lokalizację.');
+    }
+  };
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          setCoords({
+          const position = {
             lat: pos.coords.latitude,
             lon: pos.coords.longitude,
-          });
+          };
+          setCoords(position);
+          fetchWeather(position); // Automatyczne pobranie pogody
         },
         (err) => {
           console.warn('Błąd geolokalizacji:', err);
         }
       );
     }
-  }, []);
+  }, [units]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 flex flex-col items-center justify-center p-4">
@@ -68,7 +80,12 @@ export default function Home() {
           <div className="flex gap-2 items-center">
             <button
               type="button"
-              onClick={() => setUnits(units === 'metric' ? 'imperial' : 'metric')}
+              onClick={() => {
+                const newUnits = units === 'metric' ? 'imperial' : 'metric';
+                setUnits(newUnits);
+                if (coords) fetchWeather(coords);
+                else if (city) fetchWeather({ city });
+              }}
               className="text-sm text-blue-600 underline"
             >
               °{units === 'metric' ? 'C' : 'F'}
