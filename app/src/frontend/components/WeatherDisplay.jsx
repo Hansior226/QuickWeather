@@ -1,15 +1,19 @@
+// src/components/WeatherDisplay.jsx
 import React from 'react';
 
-export default function WeatherDisplay({ data, city }) {
-  const iconUrl = `http://openweathermap.org/img/wn/${data.icon}@2x.png`;
+export default function WeatherDisplay({ data, city, units }) {
+  const iconUrl = `http://openweathermap.org/img/wn/${data.icon}@4x.png`;
   return (
-    <div className="text-center my-4">
-      <img src={iconUrl} alt={data.description} className="mx-auto" />
-      <h2 className="text-3xl font-semibold mb-2">{city}</h2>
-      <h3 className="text-3xl font-bold">{Math.round(data.temp)}°</h3>
+    <div className="flex flex-col items-center justify-center space-y-2">
+      <img src={iconUrl} alt={data.description} className="w-32 h-32" />
+      <h2 className="text-2xl font-medium">{city}</h2>
+      <p className="text-5xl font-bold">
+        {Math.round(data.temp)}°{units === 'metric' ? 'C' : 'F'}
+      </p>
       <p className="capitalize">{data.description}</p>
-      <p>Wilgotność: {data.humidity}% | Wiatr: {data.wind} m/s</p>
-      <p>Ciśnienie: {data.pressure} hPa</p>
+      <p className="text-sm text-gray-400">
+        Wilgotoność {Math.round(data.humidity)}% | Wiatr {data.wind} {units === 'metric' ? 'm/s' : 'mph'}
+      </p>
     </div>
   );
 }
