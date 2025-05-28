@@ -5,7 +5,6 @@ from unittest.mock import patch, Mock
 import sys
 import os
 
-# Dodaj ścieżkę do app.py
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -52,7 +51,6 @@ class TestBasicEndpoints:
         print(f"Health response status: {response.status_code}")
         print(f"Health response data: {response.get_data(as_text=True)}")
 
-        # Sprawdź czy endpoint istnieje (nie 404)
         assert response.status_code != 404
 
     def test_stats_endpoint(self, client):
@@ -61,7 +59,6 @@ class TestBasicEndpoints:
         print(f"Stats response status: {response.status_code}")
         print(f"Stats response data: {response.get_data(as_text=True)}")
 
-        # Sprawdź czy endpoint istnieje
         assert response.status_code != 404
 
 
@@ -84,17 +81,14 @@ class TestWeatherAPI:
         self, mock_get, client, mock_weather_response
     ):
         """Test pobierania pogody dla miasta z mockiem"""
-        # Mock current weather response
         mock_current = Mock()
         mock_current.status_code = 200
         mock_current.json.return_value = mock_weather_response
 
-        # Mock forecast response
         mock_forecast = Mock()
         mock_forecast.status_code = 200
         mock_forecast.json.return_value = {"list": []}
 
-        # Konfiguruj mock aby zwracał różne odpowiedzi
         mock_get.side_effect = [mock_current, mock_forecast]
 
         response = client.get("/api/weather?city=Warszawa&units=metric")
@@ -107,7 +101,6 @@ class TestWeatherAPI:
             assert "current" in data
             assert "city" in data
         else:
-            # Jeśli nie 200, sprawdź czy to błąd API key
             assert response.status_code in [401, 500]
 
     def test_weather_endpoint_invalid_city(self, client):
@@ -117,7 +110,6 @@ class TestWeatherAPI:
         print(f"Invalid city response status: {response.status_code}")
         print(f"Invalid city response data: {response.get_data(as_text=True)}")
 
-        # Oczekujemy błędu (404 lub 500)
         assert response.status_code in [404, 500]
 
 
@@ -149,7 +141,6 @@ class TestUtilityFunctions:
         try:
             from app import normalize_city_name
 
-            # Test podstawowy
             result = normalize_city_name("Kraków")
             assert result is not None
             print(f"✅ normalize_city_name('Kraków') = {result}")
@@ -172,17 +163,14 @@ class TestErrorHandling:
     @patch("app.requests.get")
     def test_api_timeout_error(self, mock_get, client):
         """Test obsługi timeout API"""
-        # Symuluj timeout
         mock_get.side_effect = Exception("Timeout error")
 
         response = client.get("/api/weather?city=TestCity")
 
         print(f"Timeout test response status: {response.status_code}")
-        # Oczekujemy błędu serwera
         assert response.status_code == 500
 
 
-# Test konfiguracji
 def test_environment_variables():
     """Test zmiennych środowiskowych"""
     import os

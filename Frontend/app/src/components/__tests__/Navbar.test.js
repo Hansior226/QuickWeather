@@ -25,11 +25,9 @@ describe('Navbar', () => {
         const menuButton = screen.getByLabelText('Toggle menu');
         fireEvent.click(menuButton);
 
-        // Sprawdź czy mobile menu się pojawiło
         expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
 
-        // Menu powinno być widoczne - sprawdź przez testid zamiast liczenia
-        expect(screen.getAllByText('Główna')).toHaveLength(2); // Desktop + Mobile
+        expect(screen.getAllByText('Główna')).toHaveLength(2);
     });
 
     test('closes mobile menu when clicking menu item', () => {
@@ -38,14 +36,11 @@ describe('Navbar', () => {
         const menuButton = screen.getByLabelText('Toggle menu');
         fireEvent.click(menuButton);
 
-        // Sprawdź czy menu jest otwarte
         expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
 
-        // Kliknij w link w mobile menu
         const mobileLink = screen.getByTestId('mobile-menu').querySelector('a[href="/air-quality"]');
         fireEvent.click(mobileLink);
 
-        // Menu powinno się zamknąć (nie ma już testid)
         expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();
     });
 
