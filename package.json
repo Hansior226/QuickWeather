@@ -1,0 +1,22 @@
+{
+  "name": "quickweather",
+  "version": "1.0.0",
+  "description": "Weather application with React frontend and Flask backend",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:backend": "cd Backend && python -m pytest",
+    "test:backend:coverage": "cd Backend && python -m pytest --cov=app --cov-report=html",
+    "test:frontend": "cd Frontend/app && npm test -- --watchAll=false",
+    "test:frontend:coverage": "cd Frontend/app && npm run test:coverage",
+    "test:all": "npm run test:backend && npm run test:frontend && npm run test:e2e",
+    "start:backend": "cd Backend && python app.py",
+    "start:frontend": "cd Frontend/app && npm start",
+    "install:all": "cd Backend && pip install -r requirements.txt && cd ../Frontend/app && npm install"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "concurrently": "^8.2.2"
+  }
+}

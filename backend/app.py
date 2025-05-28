@@ -719,3 +719,27 @@ if __name__ == "__main__":
     print("   /api/health - Status zdrowia")
     print("\n🚀 Uruchamianie serwera...")
     app.run(debug=True, host="0.0.0.0", port=5000)
+
+
+def normalize_city_name(city_name):
+    """Normalizuje nazwę miasta"""
+    if not city_name:
+        return city_name
+
+    polish_chars = {
+        "ą": "a",
+        "ć": "c",
+        "ę": "e",
+        "ł": "l",
+        "ń": "n",
+        "ó": "o",
+        "ś": "s",
+        "ź": "z",
+        "ż": "z",
+    }
+
+    normalized = city_name
+    for polish, basic in polish_chars.items():
+        normalized = normalized.replace(polish, basic)
+
+    return normalized

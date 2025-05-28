@@ -1,14 +1,14 @@
 // App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './frontend/components/Navbar';
-import Home from './frontend/pages/Home';
-import AirQuality from './frontend/pages/AirQuality';
-import UVIndex from './frontend/pages/UVIndex';
-import WeatherAlerts from './frontend/pages/WeatherAlerts';
-import CompareCity from './frontend/pages/CompareCity';
-import SearchLocation from './frontend/pages/SearchLocation';
-import About from './frontend/pages/About';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import AirQuality from './pages/AirQuality';
+import UVIndex from './pages/UVIndex';
+import WeatherAlerts from './pages/WeatherAlerts';
+import CompareCity from './pages/CompareCity';
+import SearchLocation from './pages/SearchLocation';
+import About from './pages/About';
 
 export default function App() {
   return (

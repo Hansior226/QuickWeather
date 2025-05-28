@@ -11,13 +11,18 @@ import json
 
 @pytest.fixture
 def client():
+    """Fixture dla klienta testowego Flask"""
     app.config["TESTING"] = True
+    app.config["WTF_CSRF_ENABLED"] = False  # Wyłącz CSRF dla testów
+
     with app.test_client() as client:
-        yield client
+        with app.app_context():  # Dodaj kontekst aplikacji
+            yield client
 
 
 @pytest.fixture
 def mock_weather_response():
+    """Mock odpowiedzi current weather API"""
     return {
         "coord": {"lon": 19.0292, "lat": 49.8121},
         "weather": [
@@ -41,6 +46,7 @@ def mock_weather_response():
 
 @pytest.fixture
 def mock_forecast_response():
+    """Mock odpowiedzi forecast API"""
     return {
         "list": [
             {
@@ -51,3 +57,22 @@ def mock_forecast_response():
             }
         ]
     }
+
+
+@pytest.fixture(autouse=True)
+def setup_test_env():
+    """Automatyczne ustawienie środowiska testowego"""
+    # Ustaw testowy klucz API jeśli nie ma
+    if not os.getenv("OPENWEATHER_KEY"):
+        os.environ["OPENWEATHER_KEY"] = "test_api_key_12345"
+
+    yield
+
+    # Cleanup po testach (opcjonalnie)
+    pass
+
+
+@pytest.fixture
+def mock_api_error():
+    """Mock błędu API"""
+    return {"cod": 404, "message": "city not found"}

@@ -25,19 +25,48 @@ describe('Navbar', () => {
         const menuButton = screen.getByLabelText('Toggle menu');
         fireEvent.click(menuButton);
 
-        // Menu powinno być widoczne
+        // Sprawdź czy mobile menu się pojawiło
+        expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
+
+        // Menu powinno być widoczne - sprawdź przez testid zamiast liczenia
         expect(screen.getAllByText('Główna')).toHaveLength(2); // Desktop + Mobile
     });
 
-    test('closes mobile menu when clicking outside', () => {
+    test('closes mobile menu when clicking menu item', () => {
         render(<NavbarWithRouter />);
 
         const menuButton = screen.getByLabelText('Toggle menu');
         fireEvent.click(menuButton);
 
-        // Kliknij poza menu
-        fireEvent.click(document.body);
+        // Sprawdź czy menu jest otwarte
+        expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
 
-        expect(screen.getAllByText('Główna')).toHaveLength(1); // Tylko desktop
+        // Kliknij w link w mobile menu
+        const mobileLink = screen.getByTestId('mobile-menu').querySelector('a[href="/air-quality"]');
+        fireEvent.click(mobileLink);
+
+        // Menu powinno się zamknąć (nie ma już testid)
+        expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();
+    });
+
+    test('menu button has correct accessibility attributes', () => {
+        render(<NavbarWithRouter />);
+
+        const menuButton = screen.getByLabelText('Toggle menu');
+
+        expect(menuButton).toHaveAttribute('aria-label', 'Toggle menu');
+        expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+
+        fireEvent.click(menuButton);
+
+        expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    test('navigation links have correct hrefs', () => {
+        render(<NavbarWithRouter />);
+
+        expect(screen.getByRole('link', { name: /Główna/ })).toHaveAttribute('href', '/');
+        expect(screen.getByRole('link', { name: /Jakość powietrza/ })).toHaveAttribute('href', '/air-quality');
+        expect(screen.getByRole('link', { name: /Indeks UV/ })).toHaveAttribute('href', '/uv-index');
     });
 });

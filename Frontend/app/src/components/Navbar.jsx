@@ -1,5 +1,5 @@
 // components/Navbar.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
@@ -18,6 +18,11 @@ export default function Navbar() {
 
     const isActive = (path) => location.pathname === path;
 
+    // Zamknij menu przy zmianie route
+    useEffect(() => {
+        setIsOpen(false);
+    }, [location.pathname]);
+
     return (
         <nav className="bg-blue-800/90 backdrop-blur-sm border-b border-blue-600 sticky top-0 z-50">
             <div className="container mx-auto px-4">
@@ -34,8 +39,8 @@ export default function Navbar() {
                                 key={item.path}
                                 to={item.path}
                                 className={`px-3 py-2 rounded-lg text-sm font-medium transition ${isActive(item.path)
-                                        ? 'bg-blue-600 text-white'
-                                        : 'text-blue-100 hover:bg-blue-700 hover:text-white'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-blue-100 hover:bg-blue-700 hover:text-white'
                                     }`}
                             >
                                 <span className="mr-1">{item.icon}</span>
@@ -48,6 +53,8 @@ export default function Navbar() {
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="md:hidden p-2 rounded-lg text-blue-100 hover:bg-blue-700"
+                        aria-label="Toggle menu"
+                        aria-expanded={isOpen}
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             {isOpen ? (
@@ -61,15 +68,15 @@ export default function Navbar() {
 
                 {/* Mobile Menu */}
                 {isOpen && (
-                    <div className="md:hidden py-4 border-t border-blue-600">
+                    <div className="md:hidden py-4 border-t border-blue-600" data-testid="mobile-menu">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
                                 onClick={() => setIsOpen(false)}
                                 className={`block px-4 py-2 text-sm font-medium transition ${isActive(item.path)
-                                        ? 'bg-blue-600 text-white'
-                                        : 'text-blue-100 hover:bg-blue-700 hover:text-white'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-blue-100 hover:bg-blue-700 hover:text-white'
                                     }`}
                             >
                                 <span className="mr-2">{item.icon}</span>
