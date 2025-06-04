@@ -20,7 +20,7 @@ QuickWeather is a user-friendly web application that allows users to check real-
 
         HTML
 
-        CSS (with Bootstrap/Tailwind CSS for styling)
+        CSS (Tailwind CSS for styling)
 
         JavaScript (for interactivity)
 
@@ -28,15 +28,11 @@ QuickWeather is a user-friendly web application that allows users to check real-
 
     API:
 
-        OpenWeatherMap API (or any other weather API)
+        OpenWeatherMap API
 
     Geolocation:
 
         Browser geolocation API for detecting user location
-
-    Charting (optional):
-
-        Chart.js for displaying graphical weather data
 
 # Setup Instructions:
 Prerequisites:
@@ -61,21 +57,13 @@ Start the app:
 
 Configuration:
 
-    Obtain an API key from OpenWeatherMap (or your chosen weather API provider) and replace it in the app’s configuration file or as an environment variable.
+    Obtain an API key from OpenWeatherMap and replace it in the app’s configuration file or as an environment variable.
 
 # Additional Features (Future Enhancements):
 
-    User preferences: Allow users to save their favorite locations for quick access.
-
     Hourly forecast: Display hourly weather forecasts.
-
-    Weather notifications: Send notifications to users about weather changes (e.g., rain alerts).
-
-    Data visualization: Graphical representation of temperature, humidity, and wind speed trends.
 
 # Contributing:
 
 If you'd like to contribute to the project, feel free to fork the repository and submit a pull request. Any contributions, bug fixes, or feature enhancements are welcome!
 License:
-
-This project is licensed under the MIT License - see the LICENSE file for details.
